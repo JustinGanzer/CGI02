@@ -29,7 +29,6 @@ define(["util", "vec2", "Scene", "PointDragger"],
             this.p0 = point0 || [10,10];
 			this.radius = radius || 70;
 			
-			console.log(this.radius);
 			
             // draw style for drawing the line
             this.drawStyle = drawStyle || { width: "2", color: "#0000AA" };

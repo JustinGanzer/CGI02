@@ -30,6 +30,12 @@ requirejs.config({
 		"Circle" : "./scene/circle",
 		"Point" : "./scene/point",
         "PointDragger" : "./scene/point_dragger",
+		
+		//KD-Tree items:
+		"BoundingBox" : "./kdtree/boundingbox",
+		"KdNode" : "./kdtree/kdnode",
+		"KdUtil" : "./kdtree/kdutil",
+		"KdTree" : "./kdtree/kdtree",
 
         "vec2" : "./math/vec2",
 

@@ -12,8 +12,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "Line", "Circle", "Point"],
-    (function($, Line, Circle, Point) {
+define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil) {
         "use strict";
 
         /*
@@ -22,6 +22,8 @@ define(["jquery", "Line", "Circle", "Point"],
          */
         var HtmlController = function(context,scene,sceneController) {
 
+		var kdTree;
+        var pointList = [];
 
             // generate random X coordinate within the canvas
             var randomX = function() {
@@ -134,6 +136,14 @@ define(["jquery", "Line", "Circle", "Point"],
                 sceneController.select(temp_obj);
 			}));
 			
+			$("#param_Radius").change( (function() {
+				var temp_obj = sceneController.getSelectedObject();
+				var radius = $("#param_Radius").val();
+				temp_obj.radius = radius;
+				sceneController.deselect();
+                sceneController.select(temp_obj);
+			}));
+			
 			
 			/* OnSelection Event for all objects */
 			sceneController.onSelection( function(){
@@ -143,13 +153,90 @@ define(["jquery", "Line", "Circle", "Point"],
 				$("#param_Number").val(number);
 				$("#param_Color").val(color);
 				if(temp_obj instanceof Circle){
-					var radius = temp_obj.drawStyle.radius;
-					$("#param_Radius").show();
+					var radius = temp_obj.radius;
+					$("#radius_div").show();
 					$("#param_Radius").val(radius);
 				}else{
-					$("#param_Radius").hide();
+					$("#radius_div").hide();
 				}
 			});
+			
+			/*
+			!!!!!!!!!!!!!!!!!!! Blatt 2 !!!!!!!!!!!!!!!!!! */
+			
+			$("#btnNewPointList").click( (function() {
+
+                // create the actual line and add it to the scene
+                var style = {
+                    width: Math.floor(Math.random()*3)+1,
+                    color: randomColor()
+                };
+
+                var numPoints = parseInt($("#numPoints").attr("value"));;
+                for(var i=0; i<numPoints; ++i) {
+                    var point = new Point([randomX(), randomY()], 5,
+                        style);
+                    scene.addObjects([point]);
+                    pointList.push(point);
+                }
+
+                // deselect all objects, then select the newly created object
+                sceneController.deselect();
+
+            }));
+
+            $("#visKdTree").click( (function() {
+
+                var showTree = $("#visKdTree").attr("checked");
+                if(showTree && kdTree) {
+                    KdUtil.visualizeKdTree(sceneController, scene, kdTree.root, 0, 0, 600, true);
+                }
+
+            }));
+
+            $("#btnBuildKdTree").click( (function() {
+
+                kdTree = new KdTree(pointList);
+
+            }));
+
+            /**
+             * creates a random query point and
+             * runs linear search and kd-nearest-neighbor search
+             */
+            $("#btnQueryKdTree").click( (function() {
+
+                var style = {
+                    width: 2,
+                    color: "#ff0000"
+                };
+                var queryPoint = new Point([randomX(), randomY()], 2,
+                    style);
+                scene.addObjects([queryPoint]);
+                sceneController.select(queryPoint); 
+
+                console.log("query point: ", queryPoint.center);
+
+                ////////////////////////////////////////////////
+                // TODO: measure and compare timings of linear
+                //       and kd-nearest-neighbor search
+                ////////////////////////////////////////////////
+                var linearTiming;
+                var kdTiming;
+
+                var minIdx = KdUtil.linearSearch(pointList, queryPoint);
+
+                console.log("nearest neighbor linear: ", pointList[minIdx].center);
+
+                var kdNearestNeighbor = kdTree.findNearestNeighbor(kdTree.root, queryPoint, 10000000, kdTree.root, 0);
+
+                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.center);
+
+                sceneController.select(pointList[minIdx]);
+                sceneController.select(kdNearestNeighbor.point);
+
+            }));
+
 			
 
 

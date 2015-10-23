@@ -29,8 +29,6 @@ define(["util", "vec2", "Scene", "PointDragger"],
             this.p0 = point0 || [10,10];
 			this.radius = radius || 70;
 			
-			console.log(this.radius);
-			
             // draw style for drawing the line
             this.drawStyle = drawStyle || { width: "2", color: "#0000AA" };
 			this.drawStyle.radius = this.radius || 5;
@@ -68,8 +66,14 @@ define(["util", "vec2", "Scene", "PointDragger"],
                 // is less or equal ( radius + (line width)/2 )
                 var dx = mousePos[0] - pos[0];
                 var dy = mousePos[1] - pos[1];
-                var r = this.drawStyle.radius+this.drawStyle.width/2;
-                return (Math.sqrt(dx*dx + dy*dy) >= (Math.sqrt(r*r) - 2) && Math.sqrt(dx*dx + dy*dy) <= (Math.sqrt(r*r) + 2) );
+				
+				/* !!!!
+					ParseInt() because somewhere radius turns into a string
+					*/
+                var r = parseInt(this.radius) + this.drawStyle.width / 2 ;
+				//console.log("dx :" + dx + "dy: " + dy + "r: " + r + "this Radius :" + this.radius + "this drawstile " + this.drawStyle.width/2);
+				//console.log((Math.sqrt(dx*dx + dy*dy) >= (Math.sqrt(r*r) - 4) && Math.sqrt(dx*dx + dy*dy) <= (Math.sqrt(r*r) + 2) ));
+                return (Math.sqrt(dx*dx + dy*dy) >= (Math.sqrt(r*r) - 4) && Math.sqrt(dx*dx + dy*dy) <= (Math.sqrt(r*r) + 2) );
 
             };
 
