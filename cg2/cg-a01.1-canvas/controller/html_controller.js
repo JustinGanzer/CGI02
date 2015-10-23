@@ -142,6 +142,13 @@ define(["jquery", "Line", "Circle", "Point"],
 				var color = temp_obj.drawStyle.color;
 				$("#param_Number").val(number);
 				$("#param_Color").val(color);
+				if(temp_obj instanceof Circle){
+					var radius = temp_obj.drawStyle.radius;
+					$("#param_Radius").show();
+					$("#param_Radius").val(radius);
+				}else{
+					$("#param_Radius").hide();
+				}
 			});
 			
 
