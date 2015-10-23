@@ -29,7 +29,7 @@ define(["jquery", "Line", "Circle", "Point"],
             };
 
             // generate random Y coordinate within the canvas
-            var randomY = function() {
+            var randomY = function() {sceneController
                 return Math.floor(Math.random()*(context.canvas.height-10))+5;
             };
 
@@ -116,6 +116,34 @@ define(["jquery", "Line", "Circle", "Point"],
                 sceneController.select(point); // this will also redraw
 
             }));
+			
+			/* Change-Handlers for Parameters(input) */
+			$("#param_Number").change( (function() {
+				var temp_obj = sceneController.getSelectedObject();
+				var number = $("#param_Number").val();
+				temp_obj.drawStyle.width = number;
+				sceneController.deselect();
+                sceneController.select(temp_obj);
+			}));
+			
+			$("#param_Color").change( (function() {
+				var temp_obj = sceneController.getSelectedObject();
+				var color = $("#param_Color").val();
+				temp_obj.drawStyle.color = color;
+				sceneController.deselect();
+                sceneController.select(temp_obj);
+			}));
+			
+			
+			/* OnSelection Event for all objects */
+			sceneController.onSelection( function(){
+				var temp_obj = sceneController.getSelectedObject();
+				var number = temp_obj.drawStyle.width;
+				var color = temp_obj.drawStyle.color;
+				$("#param_Number").val(number);
+				$("#param_Color").val(color);
+			});
+			
 
 
         };
