@@ -84,7 +84,11 @@ define([], (function() {
      */
     kdutil.median = function(values, dim) {
 
-        values.sort( function(a,b) {return a.center[dim] - b.center[dim];} );
+        values.sort( function(a,b) {
+			/*console.log(a);
+			console.log(b);
+			console.log(dim);*/
+			return a.center[dim] - b.center[dim];} );
 
         var half = Math.floor(values.length/2);
 

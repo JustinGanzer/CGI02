@@ -27,6 +27,10 @@ define(["util", "vec2", "Scene", "PointDragger"],
 
 			// initial values in case either point is undefined
             this.p0 = point0 || [10,10];
+			
+			// center is the same as p0 but required as the teachers methods call for point.center
+            this.center = point0 || [10,10];
+			
 			this.radius = radius || 70;
 			
 			

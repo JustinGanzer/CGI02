@@ -31,7 +31,7 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
             };
 
             // generate random Y coordinate within the canvas
-            var randomY = function() {sceneController
+            var randomY = function() {
                 return Math.floor(Math.random()*(context.canvas.height-10))+5;
             };
 
