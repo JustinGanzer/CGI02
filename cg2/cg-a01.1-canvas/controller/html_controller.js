@@ -12,8 +12,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
-    (function($, Line, Circle, Point, KdTree, Util, KdUtil) {
+define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil", "parametricCurve", "bezierCurve"],
+    (function($, Line, Circle, Point, KdTree, Util, KdUtil, ParametricCurve, BezierCurve) {
         "use strict";
 
         /*
@@ -159,6 +159,26 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
 				}else{
 					$("#radius_div").hide();
 				}
+                
+                // BLATT 3 :
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = temp_obj.xt;
+                    $("#input_xt").val(tempVal);
+
+                    tempVal = temp_obj.yt;
+                    $("#input_yt").val(tempVal);
+
+                     tempVal = temp_obj.maxt;
+                    $("#input_maxt").val(tempVal);
+
+                     tempVal = temp_obj.mint;
+                    $("#input_mint").val(tempVal);
+
+                     tempVal = temp_obj.segments;
+                    $("#input_segments").val(tempVal);
+                }else{
+                    //nada
+                }
 			});
 			
 			/*
@@ -224,19 +244,113 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil"],
                 var linearTiming;
                 var kdTiming;
 
+                linearTiming = new Date().getTime();
                 var minIdx = KdUtil.linearSearch(pointList, queryPoint);
+                linearTiming = (linearTiming - new Date().getTime()) * (-1);
 
-                console.log("nearest neighbor linear: ", pointList[minIdx].center);
+                console.log("nearest neighbor linear: ", pointList[minIdx].center, " Time needed: ", linearTiming);
 
+                kdTiming = new Date().getTime();
                 var kdNearestNeighbor = kdTree.findNearestNeighbor(kdTree.root, queryPoint, 10000000, kdTree.root, 0);
+                kdTiming = (kdTiming - new Date().getTime()) * (-1);
 
-                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.center);
+                console.log("nearest neighbor kd: ", kdNearestNeighbor.point.center, " Time needed: ", kdTiming);
 
                 sceneController.select(pointList[minIdx]);
                 sceneController.select(kdNearestNeighbor.point);
 
             }));
 
+            /* !!!!!!!!!!!!!!!!!!! Blatt 3 !!!!!!!!!!!!!!!!!! */
+
+            $("#btnNewParametric").click( (function() {
+
+                // create the actual ParametricCurve and add it to the scene
+                var style = {
+                    width: Math.floor(Math.random()*3)+1,
+                    color: randomColor()
+                };
+
+                var para = new ParametricCurve();
+                scene.addObjects([para]);
+
+                // deselect all objects, then select the newly created object
+                sceneController.deselect();
+                sceneController.select(para); // this will also redraw
+
+            }));
+
+            $("#btnNewBezier").click( (function() {
+
+
+                var bezi = new BezierCurve();
+                scene.addObjects([bezi]);
+
+                // deselect all objects, then select the newly created object
+                sceneController.deselect();
+                sceneController.select(bezi); // this will also redraw
+
+            }));
+
+            $("#input_xt").change( (function() {
+                var temp_obj = sceneController.getSelectedObject();
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = $("#input_xt").val();
+                    temp_obj.xt = tempVal;
+                    sceneController.deselect();
+                    sceneController.select(temp_obj);
+                }else{
+                    //nada
+                }
+            }));
+
+            $("#input_yt").change( (function() {
+                var temp_obj = sceneController.getSelectedObject();
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = $("#input_yt").val();
+                    temp_obj.yt = tempVal;
+                    sceneController.deselect();
+                    sceneController.select(temp_obj);
+                }else{
+                    //nada
+                }
+            }));
+
+            $("#input_mint").change( (function() {
+                var temp_obj = sceneController.getSelectedObject();
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = $("#input_mint").val();
+                    temp_obj.mint = tempVal;
+                    sceneController.deselect();
+                    sceneController.select(temp_obj);
+                }else{
+                    //nada
+                }
+            }));
+
+            $("#input_maxt").change( (function() {
+                var temp_obj = sceneController.getSelectedObject();
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = $("#input_maxt").val();
+                    temp_obj.maxt = tempVal;
+                    sceneController.deselect();
+                    sceneController.select(temp_obj);
+                }else{
+                    //nada
+                }
+            }));
+
+            $("#input_segments").change( (function() {
+                var temp_obj = sceneController.getSelectedObject();
+                if(temp_obj instanceof ParametricCurve || BezierCurve){
+                    var tempVal = $("#input_segments").val();
+                    temp_obj.segments = tempVal;
+                    sceneController.deselect();
+                    sceneController.select(temp_obj);
+                }else{
+                    //nada
+                }
+            }));
 			
 
 

@@ -43,11 +43,23 @@
 
 		<button id="btnNewCircle"   type="button"   >New Circle</button>
 		<button id="btnNewPoint"   type="button"   >New Point</button>
+        <button id="btnNewParametric"   type="button"   >New Parametric Curve</button>
+        <button id="btnNewBezier"   type="button"   >New Bezier Curve</button>
 		
-		<h3>Parameters:</h3>
+		<h3>Parameters/Selected Object:</h3>
 		<input id="param_Color"> Color </input>
 		<input id ="param_Number"> Number </input>
 		<div id="radius_div"><input id ="param_Radius"> Radius </input></div>
+
+        <!-- Fuer Aufgabe 3 - ParameticCurve  -->
+        <div id="selectedObjectDiv">
+            <input id ="input_xt"> x(t) </input>
+            <input id ="input_yt"> y(t) </input>
+            <input id ="input_mint"> min t </input>
+            <input id ="input_maxt"> max t </input>
+            <input id ="input_segments"> segments </input>
+            <input id="input_tickmarks" type="checkbox" /> tick marks
+        </div>
 		
 		<h3>kd-Tree:</h3>
 		<button id="btnNewPointList"   type="button"   >New Point List</button>

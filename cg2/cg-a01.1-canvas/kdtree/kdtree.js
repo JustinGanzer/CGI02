@@ -43,7 +43,7 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 var median = KdUtil.median(pointList, dim);
                 // compute next axis
                 var nextAxis;
-				
+
 				if(dim)
 					nextAxis = 0 ;
 				else
@@ -52,16 +52,16 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
                 node.point = pointList[median];
                 // compute bounding box for node
                 // check if node is root (has no parent)
-                // 
-                // take a look in findNearestNeighbor why we 
+                //
+                // take a look in findNearestNeighbor why we
                 // need this bounding box!
-				
+
 				var box;
                 if( !parent ) {
                     // Note: hardcoded canvas size here
 					box = new BoundingBox(0,0,499,399,node.point,dim);
                 } else {
-					console.log(parent);
+					//console.log(parent);
                     // create bounding box and distinguish between axis and
                     // which side (left/right) the node is on
 					if(isLeft && dim)
@@ -79,18 +79,10 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
 				node.bbox = box;
 
                 // create point list left/right and
-				
+
 				var leftList = [];
 				var rightList = [];
-				/*
-				for(var i = 0; i < median; i++){
-					leftList.push(pointList[i]);
-				}
-				
-				for(var i = median+1; i < pointList.length; i++){
-					rightList.push(pointList[i]);
-				}*/
-				
+
 				if(!dim){
 					for(var i = 0; i < median; i++){
 						leftList.push(pointList[i]);
@@ -98,39 +90,23 @@ define(["kdutil", "vec2", "Scene", "KdNode", "BoundingBox"],
 					for(var i = median+1; i < pointList.length; i++){
 						rightList.push(pointList[i]);
 					}
-				
+
 				}else{
 					for(var i = 0; i < median; i++){
 						rightList.push(pointList[i]);
 					}
-				
+
 					for(var i = median+1; i < pointList.length; i++){
 						leftList.push(pointList[i]);
 					}
 				}
-				
-				
-				
+
+
+
                 // call build for left/right arrays
-                
-				
-				
-				
-				
-				node.leftChild = this.build(leftList, nextAxis, node, 1);
+                node.leftChild = this.build(leftList, nextAxis, node, 1);
 				node.rightChild = this.build(rightList, nextAxis, node, 0);
-				/*
-				console.log("Point: (" + node.point.center[0] + "/" + node.point.center[1]+ ")");
-				if(node.leftChild)
-					console.log("Left Child:(" + node.leftChild.point.center[0] + "/" + node.leftChild.point.center[1]);
-				if(node.rightChild)
-					console.log("Right Child:(" + node.rightChild.point.center[0] + "/" + node.rightChild.point.center[1]);
-				if(!node.leftChild && !node.rightChild)
-					console.log("No children!");
-				console.log("\n");
-				*/
-				
-				
+
                 return node;
             };
 
