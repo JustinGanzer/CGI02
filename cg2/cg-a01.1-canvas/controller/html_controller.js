@@ -127,7 +127,8 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil", "parame
 				sceneController.deselect();
                 sceneController.select(temp_obj);
 			}));
-			
+
+            /* Change-Handlers for Parameters(color) */
 			$("#param_Color").change( (function() {
 				var temp_obj = sceneController.getSelectedObject();
 				var color = $("#param_Color").val();
@@ -135,7 +136,8 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil", "parame
 				sceneController.deselect();
                 sceneController.select(temp_obj);
 			}));
-			
+
+            /* Change-Handlers for Parameters(radius) */
 			$("#param_Radius").change( (function() {
 				var temp_obj = sceneController.getSelectedObject();
 				var radius = $("#param_Radius").val();
@@ -192,10 +194,9 @@ define(["jquery", "Line", "Circle", "Point", "KdTree", "util", "kdutil", "parame
                     color: randomColor()
                 };
 
-                var numPoints = parseInt($("#numPoints").attr("value"));;
+                var numPoints = parseInt($("#numPoints").attr("value"));
                 for(var i=0; i<numPoints; ++i) {
-                    var point = new Point([randomX(), randomY()], 5,
-                        style);
+                    var point = new Point([randomX(), randomY()], 5, style);
                     scene.addObjects([point]);
                     pointList.push(point);
                 }
