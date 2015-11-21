@@ -15,7 +15,7 @@ requirejs.config({
         // jquery library
         "jquery": [
             // try content delivery network location first
-            'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min',
+            //'http://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min', TODO: reenable cdn jquery loading.
             //If the load via CDN fails, load locally
             '../lib/jquery-1.7.2.min'],
 
@@ -24,6 +24,8 @@ requirejs.config({
         "scene" : "./scene/scene",
         "random" : "./models/random",
         "band" : "./models/band",
+        "ellipsoid" : "./models/ellipsoid",
+
         "util"  : "./utils/util",
         "shaders" : "./shaders",
         "BufferGeometry" : "./scene/buffer_geometry",

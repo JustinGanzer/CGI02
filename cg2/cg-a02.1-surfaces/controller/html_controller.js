@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band"],
-    (function($,BufferGeometry, Random, Band) {
+define(["jquery", "BufferGeometry", "random", "band", "ellipsoid"],
+    (function($,BufferGeometry, Random, Band, Ellipsoid) {
         "use strict";
 
         /*
@@ -24,16 +24,26 @@ define(["jquery", "BufferGeometry", "random", "band"],
 
             $("#random").show();
             $("#band").hide();
+            $("#elipsoid").hide();
 
             $("#btnRandom").click( (function() {
                 $("#random").show();
+                $("#elipsoid").hide();
                 $("#band").hide();
             }));
 
             $("#btnBand").click( (function() {
                 $("#random").hide();
+                $("#elipsoid").hide();
                 $("#band").show();
             }));
+
+            $("#btnEllipsoid").click( (function() {
+                $("#random").hide();
+                $("#band").hide();
+                $("#elipsoid").show();
+            }));
+
 
             $("#btnNewRandom").click( (function() {
 
@@ -64,6 +74,25 @@ define(["jquery", "BufferGeometry", "random", "band"],
                 scene.addBufferGeometry(bufferGeometryBand);
             }));
 
+
+            $("#btnNewEllipsoid").click( (function() {
+
+                var config = {
+                    segmentsW : parseInt($("#numSegmentsW").attr("value")),
+                    segmentsUV : parseInt($("#numSegmentsUV").attr("value")),
+                    radius : parseInt($("#radius").attr("value")),
+                    height : parseInt($("#height").attr("value"))
+                };
+
+
+                var ellipsoid = new Ellipsoid(config);
+                var bufferGeometryEllipsoid = new BufferGeometry();
+                bufferGeometryEllipsoid.addAttribute("position", band.getPositions());
+                bufferGeometryEllipsoid.addAttribute("color", band.getColors());
+
+                scene.addBufferGeometry(bufferGeometryEllipsoid);
+
+            }));
 
         };
 

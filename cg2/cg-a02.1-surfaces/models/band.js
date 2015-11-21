@@ -25,6 +25,8 @@ define(["three"],
             var radius = config.radius || 300;
             var height = config.height || 100;
 
+            console.log("creating Band with: " + segments + ", " + radius + ", " + height);
+
             this.positions = new Float32Array( 2*segments * 3);
             this.colors = new Float32Array( 2*segments * 3 );
 
