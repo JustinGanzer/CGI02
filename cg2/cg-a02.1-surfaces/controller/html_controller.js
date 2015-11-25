@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band"],
-    (function($,BufferGeometry, Random, Band) {
+define(["jquery", "BufferGeometry", "random", "band", "parametric"],
+    (function($,BufferGeometry, Random, Band, Parametric) {
         "use strict";
 
         /*
@@ -24,15 +24,28 @@ define(["jquery", "BufferGeometry", "random", "band"],
 
             $("#random").show();
             $("#band").hide();
+            $("#parametric").hide();
 
             $("#btnRandom").click( (function() {
                 $("#random").show();
                 $("#band").hide();
+                $("#parametric").hide();
             }));
 
             $("#btnBand").click( (function() {
                 $("#random").hide();
                 $("#band").show();
+                $("#parametric").hide();
+            }));
+
+            $("#btnParametric").click( (function() {
+                $("#parametric").show();
+                $("#random").hide();
+                $("#band").hide();
+            }));
+
+            $('#rotate').click((function () {
+                scene.setAutoRotate($("#rotate").is(":checked"));
             }));
 
             $("#btnNewRandom").click( (function() {
@@ -64,6 +77,43 @@ define(["jquery", "BufferGeometry", "random", "band"],
                 scene.addBufferGeometry(bufferGeometryBand);
             }));
 
+            $("#btnNewParametric").click( (function() {
+
+                var config = {
+                    segmentsU: parseInt($("#segmentsU").attr("value")),
+                    segmentsV: parseInt($("#segmentsV").attr("value")),
+                    minU : parseInt($("#uMin").attr("value")),
+                    maxU : parseInt($("#uMax").attr("value")),
+                    minV : parseInt($("#vMin").attr("value")),
+                    maxV : parseInt($("#vMax").attr("value"))
+                };
+
+
+                // Scale factors
+                var scaleFactore = [200,300,500];
+
+                // Parameters for ellipsoid
+                var posFunc = function(u,v){
+                    var vert = [
+                        scaleFactore[0] * Math.cos(u) * Math.sin(v),
+                        scaleFactore[1] * Math.sin(u) * Math.sin(v),
+                        scaleFactore[2] * Math.cos(v)
+                    ];
+                    return vert;
+                }
+
+
+                var parametric = new Parametric(posFunc, config);
+                var bufferGeometryParametric = new BufferGeometry();
+                bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+            }));
+
+            $("#animate").click((function () {
+                scene.toggleAnimation($("#animate")[0].checked );
+            }));
 
         };
 

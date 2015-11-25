@@ -32,6 +32,8 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
             scope.camera.position.z = 1000;
             scope.scene = new THREE.Scene();
 
+            scope.animate = false;
+
             // Add a listener for 'keydown' events. By this listener, all key events will be
             // passed to the function 'onDocumentKeyDown'. There's another event type 'keypress'.
             document.addEventListener("keydown", onDocumentKeyDown, false);
@@ -67,15 +69,21 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
 
             }
 
+            this.toggleAnimation = function (bool){
+                scope.animate = bool;
+            }
+
             /*
              * drawing the scene
              */
             this.draw = function() {
 
                 requestAnimFrame( scope.draw );
-
                 scope.renderer.render(scope.scene, scope.camera);
 
+                if (scope.animate && scope.currentMesh) {
+                    scope.currentMesh.rotateY(0.05)
+                }
             };
         };
 

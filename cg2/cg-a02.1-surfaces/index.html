@@ -37,6 +37,10 @@
 
         <!-- add more here... -->
         <h3>Selected Object:</h3>
+
+        <label>Animate </label><input id="animate" type="checkbox">
+
+
         <table id="random">
             <tr>
                 <td>Number of Items:</td>
@@ -46,6 +50,7 @@
                 <td><button id="btnNewRandom"   type="button"   >Create Random</button></td>
             </tr>
         </table>
+
         <table id="band">
             <tr>
                 <td>Number of Segments:</td>
@@ -61,6 +66,36 @@
             </tr>
             <tr>
                 <td><button id="btnNewBand"   type="button"   >Create Band</button></td>
+            </tr>
+        </table>
+
+        <table id="parametric">
+            <tr>
+                <td>Number of Segments U:</td>
+                <td><input id="segmentsU" class="objParam" type="number" min="2" max="10000" value="50">
+            </tr>
+            <tr>
+                <td>Number of Segments V:</td>
+                <td><input id="segmentsV" class="objParam" type="number" min="2" max="10000" value="50">
+            </tr>
+            <tr>
+                <td>u min:</td>
+                <td><input id="uMin" class="objParam" type="number" min="0" max="1000" step="any" value="0">
+            </tr>
+            <tr>
+                <td>u max:</td>
+                <td><input id="uMax" class="objParam" type="number" min="0" max="1000" step="any" value="6.283">
+            </tr>
+            <tr>
+                <td>v min:</td>
+                <td><input id="vMin" class="objParam" type="number" min="0" max="1000" step="any" value="0">
+            </tr>
+            <tr>
+                <td>v max:</td>
+                <td><input id="vMax" class="objParam" type="number" min="0" max="1000" step="any" value="6.283">
+            </tr>
+            <tr>
+                <td><button id="btnNewParametric"   type="button"   >Create Parametric</button></td>
             </tr>
         </table>
 
