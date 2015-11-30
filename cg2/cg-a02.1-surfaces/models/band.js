@@ -27,6 +27,7 @@ define(["three"],
 
             this.positions = new Float32Array( 2*segments * 3);
             this.colors = new Float32Array( 2*segments * 3 );
+            this.vertices = new Float32Array(this.positions.length / 3);
 
             var color = new THREE.Color();
 
@@ -64,6 +65,16 @@ define(["three"],
                 this.colors[ i + 5 ] = color.b;
             };
 
+            this.vertices[0] = [this.positions[0],this.positions[0+1],this.positions[0+2]];
+            this.vertices[0+1] = [this.positions[0+3],this.positions[0+4],this.positions[0+5]];
+            this.vertices[0+2] = [this.positions[0+6],this.positions[0+7],this.positions[0+8]];
+
+            for(var i=3; i<this.vertices.length; i+=3) {
+
+                this.vertices[i] = this.vertices[i-1];
+                this.vertices[i+1] = [this.positions[i+6],this.positions[i+7],this.positions[i+8]];
+                this.vertices[i+2] = [this.positions[i+9],this.positions[i+10],this.positions[i+11]];
+            }
 
             this.getPositions = function() {
                 return this.positions;

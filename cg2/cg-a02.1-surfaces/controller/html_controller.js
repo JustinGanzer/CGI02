@@ -111,6 +111,74 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric"],
                 scene.addBufferGeometry(bufferGeometryParametric);
             }));
 
+            $("#btnNewTorus").click( (function() {
+
+                var config = {
+                    segmentsU: parseInt($("#segmentsU").attr("value")),
+                    segmentsV: parseInt($("#segmentsV").attr("value")),
+                    minU : 0,
+                    maxU : 2*Math.PI,
+                    minV : 0,
+                    maxV : 2*Math.PI
+                };
+
+
+                // Scale factors
+                var scaleFactore = [200,100];
+
+                // Parameters for Torus/Donut
+                var posFunc = function(u,v){
+                    var vert = [
+                        (scaleFactore[0] + scaleFactore[1] * Math.cos(v)) * Math.cos(u),
+                        (scaleFactore[0] + scaleFactore[1] * Math.cos(v)) * Math.sin(u),
+                        scaleFactore[1] * Math.sin(v)
+                    ];
+                    return vert;
+                }
+
+
+                var parametric = new Parametric(posFunc, config);
+                var bufferGeometryParametric = new BufferGeometry();
+                bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+            }));
+
+            $("#btnNewHorn").click( (function() {
+
+                var config = {
+                    segmentsU: parseInt($("#segmentsU").attr("value")),
+                    segmentsV: parseInt($("#segmentsV").attr("value")),
+                    minU : 0,
+                    maxU : Math.PI,
+                    minV : -Math.PI,
+                    maxV : Math.PI
+                };
+
+
+                // Scale factors
+                var scaleFactore = [500];
+
+                // Parameters for Horn
+                var posFunc = function(u,v){
+                    var vert = [
+                        Math.cos(u),
+                        Math.cos(v),
+                        scaleFactore[0]*Math.sin(u)*Math.sin(v)
+                    ];
+                    return vert;
+                }
+
+
+                var parametric = new Parametric(posFunc, config);
+                var bufferGeometryParametric = new BufferGeometry();
+                bufferGeometryParametric.addAttribute("position", parametric.getPositions());
+                bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                scene.addBufferGeometry(bufferGeometryParametric);
+            }));
+
             $("#animate").click((function () {
                 scene.toggleAnimation($("#animate")[0].checked );
             }));
