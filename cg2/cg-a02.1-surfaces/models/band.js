@@ -27,7 +27,7 @@ define(["three"],
 
             this.positions = new Float32Array( 2*segments * 3);
             this.colors = new Float32Array( 2*segments * 3 );
-            this.vertices = new Float32Array(this.positions.length / 3);
+            this.indices_array = [];
 
             var color = new THREE.Color();
 
@@ -65,17 +65,6 @@ define(["three"],
                 this.colors[ i + 5 ] = color.b;
             };
 
-            this.vertices[0] = [this.positions[0],this.positions[0+1],this.positions[0+2]];
-            this.vertices[0+1] = [this.positions[0+3],this.positions[0+4],this.positions[0+5]];
-            this.vertices[0+2] = [this.positions[0+6],this.positions[0+7],this.positions[0+8]];
-
-            for(var i=3; i<this.vertices.length; i+=3) {
-
-                this.vertices[i] = this.vertices[i-1];
-                this.vertices[i+1] = [this.positions[i+6],this.positions[i+7],this.positions[i+8]];
-                this.vertices[i+2] = [this.positions[i+9],this.positions[i+10],this.positions[i+11]];
-            }
-
             this.getPositions = function() {
                 return this.positions;
             };
@@ -83,6 +72,31 @@ define(["three"],
             this.getColors = function() {
                 return this.colors;
             };
+
+            this.getIndices = function(){
+                for(var i=0; i<(this.positions.length/3 - 2); i+=1) {
+                    this.indices_array.push(i, i+1, i+2, i);
+                    x = i;
+                }
+                this.indices_array.push(x + 1, 0, x+2, 1);
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
+
+            this.getSolid = function(){
+
+                for(var i=0; i<(this.positions.length/3 - 2); i++) {
+                    this.indices_array.push(i, i+1, i+2 );
+                    this.indices_array.push(i, i+2, i+1 );
+                    x = i;
+                }
+                this.indices_array.push(x+1, 0, x+2);
+                this.indices_array.push(x+1, x+2, 0);
+                this.indices_array.push(x+2, 0, 1);
+                this.indices_array.push(x+2, 1, 0);
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
 
         };
 

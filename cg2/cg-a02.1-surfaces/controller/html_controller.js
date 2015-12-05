@@ -74,6 +74,13 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric"],
                 bufferGeometryBand.addAttribute("position", band.getPositions());
                 bufferGeometryBand.addAttribute("color", band.getColors());
 
+                if($("#wireframe")[0].checked) {
+                    bufferGeometryBand.setIndices(band.getIndices());
+                }
+                if($("#solid")[0].checked) {
+                    bufferGeometryBand.makeSolid(band.getSolid());
+                }
+
                 scene.addBufferGeometry(bufferGeometryBand);
             }));
 
