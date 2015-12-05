@@ -53,13 +53,13 @@ define(["three"],
                     color: 0x000000,
                     size: 10, vertexColors: THREE.VertexColors
                 } );
-                this.mesh = new THREE.Line( this.geometry, material_2 );
+                return new THREE.Line( this.geometry, material_2 );
             }
 
             this.makeSolid = function(indices){
                 this.geometry.setIndex(indices);
                 this.geometry.computeBoundingSphere();
-                this.mesh = new THREE.Mesh( this.geometry, this.material );
+                return new THREE.Mesh( this.geometry, this.material );
             }
 
             this.getMesh = function() {

@@ -27,7 +27,6 @@ define(["three"],
 
             this.positions = new Float32Array( 2*segments * 3);
             this.colors = new Float32Array( 2*segments * 3 );
-            this.indices_array = [];
 
             var color = new THREE.Color();
 
@@ -74,6 +73,7 @@ define(["three"],
             };
 
             this.getIndices = function(){
+                this.indices_array = [];
                 for(var i=0; i<(this.positions.length/3 - 2); i+=1) {
                     this.indices_array.push(i, i+1, i+2, i);
                     x = i;
@@ -84,7 +84,7 @@ define(["three"],
             }
 
             this.getSolid = function(){
-
+                this.indices_array = [];
                 for(var i=0; i<(this.positions.length/3 - 2); i++) {
                     this.indices_array.push(i, i+1, i+2 );
                     this.indices_array.push(i, i+2, i+1 );
