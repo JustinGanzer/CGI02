@@ -67,6 +67,29 @@ define(["three"],
                 return this.colors;
             };
 
+            this.getIndices = function(){
+                this.indices_array = [];
+                var x = 0;
+
+                for ( var i = 0; i < items-2; i+=3 ) {
+                    this.indices_array.push(i, i+1, i+2, i, i+2);
+                    x = i+2;
+                }
+                this.indices_array.push(x, 0, 1, x);
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
+
+            this.getSolid = function(){
+                this.indices_array = [];
+
+                for ( var i = 0; i < items; i ++ ) {
+                    this.indices_array[ i ] = i;
+                }
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
+
         };
 
         return Random;

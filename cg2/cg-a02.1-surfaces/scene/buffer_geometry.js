@@ -59,7 +59,14 @@ define(["three"],
             this.makeSolid = function(indices){
                 this.geometry.setIndex(indices);
                 this.geometry.computeBoundingSphere();
-                return new THREE.Mesh( this.geometry, this.material );
+
+                var material_2 = new THREE.MeshBasicMaterial( {
+                    color: 0xaaaaaa,
+                    vertexColors: THREE.VertexColors,
+                    side: THREE.DoubleSide
+                } );
+
+                return new THREE.Mesh( this.geometry, material_2 );
             }
 
             this.getMesh = function() {

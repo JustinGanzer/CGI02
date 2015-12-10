@@ -65,6 +65,33 @@ define(["three"],
                 return this.colors;
             };
 
+            var x = 0;
+            this.getIndices = function(){
+                this.indices_array = [];
+                for(var i=0; i<(this.positions.length/3 - 2); i+=1) {
+                    this.indices_array.push(i, i+1, i+2, i);
+                    x = i;
+                }
+                this.indices_array.push(x + 1, 0, x+2, 1);
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
+
+            this.getSolid = function(){
+                this.indices_array = [];
+                for(var i=0; i<(this.positions.length/3 - 2); i++) {
+                    this.indices_array.push(i, i+1, i+2 );
+                    this.indices_array.push(i, i+2, i+1 );
+                    x = i;
+                }
+                this.indices_array.push(x+1, 0, x+2);
+                this.indices_array.push(x+1, x+2, 0);
+                this.indices_array.push(x+2, 0, 1);
+                this.indices_array.push(x+2, 1, 0);
+
+                return new THREE.BufferAttribute( new Uint32Array( this.indices_array ), 1 );
+            }
+
         };
 
         return ParametricSurface;

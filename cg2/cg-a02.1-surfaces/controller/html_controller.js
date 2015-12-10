@@ -56,6 +56,13 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric"],
                 bufferGeometryRandom.addAttribute("position", random.getPositions());
                 bufferGeometryRandom.addAttribute("color", random.getColors());
 
+                if($("#wireframe")[0].checked) {
+                    bufferGeometryRandom.mesh.add(bufferGeometryRandom.setIndices(random.getIndices()));
+                }
+                if($("#solid")[0].checked) {
+                    bufferGeometryRandom.mesh.add(bufferGeometryRandom.makeSolid(random.getSolid()));
+                }
+
                 scene.addBufferGeometry(bufferGeometryRandom);
             }));
 
@@ -114,6 +121,13 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric"],
                 var bufferGeometryParametric = new BufferGeometry();
                 bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                 bufferGeometryParametric.addAttribute("color", parametric.getColors());
+
+                if($("#wireframe")[0].checked) {
+                    bufferGeometryParametric.mesh.add(bufferGeometryParametric.setIndices(parametric.getIndices()));
+                }
+                if($("#solid")[0].checked) {
+                    bufferGeometryParametric.mesh.add(bufferGeometryParametric.makeSolid(parametric.getSolid()));
+                }
 
                 scene.addBufferGeometry(bufferGeometryParametric);
             }));
