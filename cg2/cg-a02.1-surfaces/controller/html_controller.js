@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band", "parametric"],
-    (function($,BufferGeometry, Random, Band, Parametric) {
+define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot"],
+    (function($,BufferGeometry, Random, Band, Parametric, Robot) {
         "use strict";
 
         /*
@@ -198,6 +198,14 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric"],
                 bufferGeometryParametric.addAttribute("color", parametric.getColors());
 
                 scene.addBufferGeometry(bufferGeometryParametric);
+            }));
+
+            $("#btnRobot").click( (function() {
+
+                var robot = new Robot();
+                var bufferGeometryRobot = new BufferGeometry();
+
+                scene.addMesh(robot.getMesh());
             }));
 
             $("#animate").click((function () {

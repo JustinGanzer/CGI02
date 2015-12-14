@@ -69,6 +69,11 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
 
             }
 
+            this.addMesh = function(newMesh) {
+                scope.currentMesh = newMesh;
+                scope.scene.add( scope.currentMesh );
+            }
+
             this.toggleAnimation = function (bool){
                 scope.animate = bool;
             }
