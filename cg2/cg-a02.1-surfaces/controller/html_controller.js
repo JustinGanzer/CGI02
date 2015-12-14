@@ -163,6 +163,13 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot"],
                 bufferGeometryParametric.addAttribute("position", parametric.getPositions());
                 bufferGeometryParametric.addAttribute("color", parametric.getColors());
 
+                if($("#wireframe")[0].checked) {
+                    bufferGeometryParametric.mesh.add(bufferGeometryParametric.setIndices(parametric.getIndices()));
+                }
+                if($("#solid")[0].checked) {
+                    bufferGeometryParametric.mesh.add(bufferGeometryParametric.makeSolid(parametric.getSolid()));
+                }
+
                 scene.addBufferGeometry(bufferGeometryParametric);
             }));
 

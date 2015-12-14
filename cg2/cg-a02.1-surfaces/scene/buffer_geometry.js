@@ -49,9 +49,10 @@ define(["three"],
                 this.geometry.setIndex(indices);
                 this.geometry.computeBoundingSphere();
 
-                var material_2 = new THREE.PointsMaterial( {
+                var material_2 = new THREE.LineBasicMaterial( {
                     color: 0x000000,
-                    size: 10, vertexColors: THREE.VertexColors
+                    vertexColors: THREE.VertexColors,
+                    side: THREE.DoubleSide
                 } );
                 return new THREE.Line( this.geometry, material_2 );
             }
