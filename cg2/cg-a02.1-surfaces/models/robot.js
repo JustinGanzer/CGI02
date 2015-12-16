@@ -47,6 +47,7 @@ define(["three", "BufferGeometry", "parametric"],
 
 
             this.root=new THREE.Object3D();
+            this.root.name="root";
 
             //skeleton================================================================================================================
             //========================================================================================================================
@@ -55,6 +56,7 @@ define(["three", "BufferGeometry", "parametric"],
             this.head.translateY(torsoSize[1]/2+headSize[1]/2);
 
             this.torso=new THREE.Object3D();
+            this.torso.name="torso";
             this.torso.translateY(100);
             this.torso.add(this.head);
 

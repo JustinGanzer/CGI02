@@ -134,16 +134,25 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
                 scope.animate = bool;
             }
 
+
             /*
              * drawing the scene
              */
             this.draw = function() {
-
+                scope.t +=1;
                 requestAnimFrame( scope.draw );
                 scope.renderer.render(scope.scene, scope.camera);
 
                 if (scope.animate && scope.currentMesh) {
                     scope.currentMesh.rotateY(0.05)
+                }
+
+                var speed = 0.3
+                if (scope.animate){
+                    scope.scene.getObjectByName("torso", true).translateY(Math.sin(scope.t*speed)*20);
+                    scope.scene.getObjectByName("torso", true).translateX(Math.sin(scope.t*speed/8)*8);
+                    scope.scene.getObjectByName("leftHip", true).scale.y = Math.sin(scope.t*speed/2)*(1/3)+1 ;
+                    scope.scene.getObjectByName("rightHip", true).scale.y = Math.sin(scope.t*speed/2 + Math.PI/2)*(1/3)+1 ;
                 }
             };
         };
