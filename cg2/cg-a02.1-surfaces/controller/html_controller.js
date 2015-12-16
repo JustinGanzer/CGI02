@@ -25,23 +25,27 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot"],
             $("#random").show();
             $("#band").hide();
             $("#parametric").hide();
+            $("#robot").hide();
 
             $("#btnRandom").click( (function() {
                 $("#random").show();
                 $("#band").hide();
                 $("#parametric").hide();
+                $("#robot").hide();
             }));
 
             $("#btnBand").click( (function() {
                 $("#random").hide();
                 $("#band").show();
                 $("#parametric").hide();
+                $("#robot").hide();
             }));
 
             $("#btnParametric").click( (function() {
                 $("#parametric").show();
                 $("#random").hide();
                 $("#band").hide();
+                $("#robot").hide();
             }));
 
             $('#rotate').click((function () {
@@ -208,7 +212,7 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot"],
             }));
 
             $("#btnRobot").click( (function() {
-
+                $("#robot").show();
                 var robot = new Robot();
                 var bufferGeometryRobot = new BufferGeometry();
 

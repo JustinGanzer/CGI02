@@ -60,6 +60,62 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
                     scope.currentMesh.rotation.y += -0.05;
                     // Cursor up
                 }
+                else if(keyCode == 190){
+                    console.log("point");
+                    scope.currentMesh.rotation.z += 0.05;
+                } else if(keyCode == 173){
+                    console.log("dash");
+                    scope.currentMesh.rotation.z += -0.05;
+                }
+
+                // select Robot-parts===================================================================================
+                // upper body..........................................................
+                else if (keyCode == 54 ){ // 6
+                    scope.currentMesh = scope.scene.getObjectByName("head", true);
+                    if(scope.currentMesh){console.log("select head");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 84 ){ // t
+                    scope.currentMesh = scope.scene.getObjectByName("leftShoulder", true);
+                    if(scope.currentMesh){console.log("select leftShoulder");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 90 ){ // z
+                    scope.currentMesh = scope.scene.getObjectByName("rightShoulder", true);
+                    if(scope.currentMesh){console.log("select rightShoulder");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 82 ){ // r
+                    scope.currentMesh = scope.scene.getObjectByName("leftElbow", true);
+                    if(scope.currentMesh){console.log("select leftElbow");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 85 ){ // u
+                    scope.currentMesh = scope.scene.getObjectByName("rightElbow", true);
+                    if(scope.currentMesh){console.log("select rightElbow");}
+                    else console.warn("selection went wrong!")
+                }
+                // lower body..........................................................
+                else if (keyCode == 71 ){ // g
+                    scope.currentMesh = scope.scene.getObjectByName("leftHip", true);
+                    if(scope.currentMesh){console.log("select leftHip");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 72 ){ // h
+                    scope.currentMesh = scope.scene.getObjectByName("rightHip", true);
+                    if(scope.currentMesh){console.log("select rightHip");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 66 ){ // b
+                    scope.currentMesh = scope.scene.getObjectByName("leftKnee", true);
+                    if(scope.currentMesh){console.log("select leftKnee");}
+                    else console.warn("selection went wrong!")
+                }
+                else if (keyCode == 78 ){ // n
+                    scope.currentMesh = scope.scene.getObjectByName("rightKnee", true);
+                    if(scope.currentMesh){console.log("select rightKnee");}
+                    else console.warn("selection went wrong!")
+                }
             };
 
             this.addBufferGeometry = function(bufferGeometry) {
