@@ -1,5 +1,9 @@
 precision mediump float;
 
+//uniforms for checkboxes
+uniform int dayOn;
+uniform int nightOn;
+uniform int cloudsOn;
 
 // uniform lights (we only have the sun)
 uniform vec3 directionalLightColor[1];
@@ -24,6 +28,7 @@ uniform sampler2D cloudTexture;
 varying vec4 ecPosition;
 varying vec3 ecNormal;
 varying vec2 vUv;
+varying mat4 projectionMatrixx;
 
 uniform float time;
 
@@ -43,15 +48,29 @@ void main() {
 
 
     // get color from different textures
-    //vec3 color = texture2D(textureUniform, texCoord).rgb;
+    vec3 color1 = texture2D(daytimeTexture, vUv).rgb;
+    vec3 color2 = texture2D(nightTexture, vUv).rgb;
+    vec3 color3 = texture2D(cloudTexture, vUv).rgb;
+
    
     // normalize normal after projection
+
+    vec3 ecNormal = normalize(ecNormal);
     
     // do we use a perspective or an orthogonal projection matrix?
-    //bool usePerspective = projectionMatrix[2][3] != 0.0;
+
+    bool usePerspective = projectionMatrixx[2][3] != 0.0;
+
     // for perspective mode, the viewing direction (in eye coords) points
     // from the vertex to the origin (0,0,0) --> use -ecPosition as direction.
     // for orthogonal mode, the viewing direction is simply (0,0,1)
+
+    if(usePerspective){
+    vec3 v = vec3 (0.0-ecPosition.x,0.0-ecPosition.y,0.0-ecPosition.z);
+    }
+    else{
+    vec3 v = (0.0,0.0,1.0);
+    }
     
     // calculate color using phong illumination
     // depending on GUI checkbox:
@@ -79,10 +98,14 @@ void main() {
 
     //vec3 color = ambient + diffuse + specular;
 
+
+
     vec2 coord=vUv;
     vec4 RGB = texture2D( daytimeTexture, vUv );
     vec4 clouds = texture2D( cloudTexture, coord+vec2(1.0*time,0.0));
     RGB = 1.0-(1.0-clouds.r)*(1.0-RGB);
     gl_FragColor = vec4(RGB.r,RGB.g,RGB.b,1.0 );
+
+    //gl_FragColor = phong(position, );
 
 }

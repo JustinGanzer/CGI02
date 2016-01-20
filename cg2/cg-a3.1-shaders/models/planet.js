@@ -27,6 +27,21 @@ define(["three", "shaders"],
             color.setRGB(1,0,0);
             material2.color = color;
 
+            var daytex = 0;
+            var nighttex = 0;
+            var cloudtex = 0;
+
+            if($("#daytexture")[0].checked){
+                daytex = 1;
+            }
+            if($("#nighttexture")[0].checked){
+                nighttex = 1;
+            }
+            if($("#clouds")[0].checked){
+                cloudtex = 1;
+            }
+
+
             var material = new THREE.ShaderMaterial( {
                 uniforms: THREE.UniformsUtils.merge( [
                     THREE.UniformsLib['lights'],
@@ -39,7 +54,10 @@ define(["three", "shaders"],
                         cloudTexture: {type: "t", value: null},
                         nightTexture:{type: "t", value: null},
                         topoTexture:{type: "t", value: null},
-                        time: {type: "f", value: 1.0}
+                        time: {type: "f", value: 1.0},
+                        cloundOn: {type: "i", value: cloudtex} ,
+                        dayOn: {type: "i", value: daytex} ,
+                        nightOn: {type: "i", value: nighttex}
                     }
                 ]),
                 vertexShader: Shaders.getVertexShader("planet"),
@@ -51,21 +69,45 @@ define(["three", "shaders"],
             loader.load( "textures/earth_month04.jpg" , function ( texture )
                 {
                     material.uniforms.daytimeTexture.value = texture;
-                })
+                },
+                function ( xhr ) {
+                    console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function ( xhr ) {
+                    console.log( 'An error happened' );
+                });
             loader.load( "textures/earth_at_night_2048.jpg" , function ( texture )
                 {
                     material.uniforms.nightTexture.value  = texture;
-                })
+                },
+                function ( xhr ) {
+                    console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function ( xhr ) {
+                    console.log( 'An error happened' );
+                });
             loader.load( "textures/earth_topography_2048.jpg" , function ( texture )
                 {
                     material.uniforms.topoTexture.value  = texture;
-                })
+                },
+                function ( xhr ) {
+                    console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function ( xhr ) {
+                    console.log( 'An error happened' );
+                });
             loader.load( "textures/earth_clouds_2048.jpg" , function ( texture )
                 {
                     material.uniforms.cloudTexture.value  = texture;
                     material.uniforms.cloudTexture.value.wrapS = THREE.RepeatWrapping;
                     material.uniforms.cloudTexture.value.wrapT = THREE.RepeatWrapping;
-                })
+                },
+                function ( xhr ) {
+                    console.log( (xhr.loaded / xhr.total * 100) + '% loaded' );
+                },
+                function ( xhr ) {
+                    console.log( 'An error happened' );
+                });
 
             scope.mesh = new THREE.Mesh( new THREE.SphereGeometry(400, 100,100), material );
             scope.mesh.name = "planet";
