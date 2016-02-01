@@ -142,7 +142,12 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
             /*
              * drawing the scene
              */
+            var start = Date.now();
             this.draw = function() {
+
+                var sin = Math.sin((Date.now() - start)/1750);
+                var cos = Math.cos((Date.now() - start)/1750);
+
                 scope.t +=1;
                 requestAnimFrame( scope.draw );
                 scope.renderer.render(scope.scene, scope.camera);
@@ -157,6 +162,14 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
                     scope.scene.getObjectByName("torso", true).translateX(Math.sin(scope.t*speed/8)*8);
                     scope.scene.getObjectByName("leftHip", true).scale.y = Math.sin(scope.t*speed/2)*(1/3)+1 ;
                     scope.scene.getObjectByName("rightHip", true).scale.y = Math.sin(scope.t*speed/2 + Math.PI/2)*(1/3)+1 ;
+                }
+
+                var planet = scope.scene.getObjectByName("planet");
+                var dLight = scope.scene.getObjectByName("dLight");
+                if(planet){
+                    if ($("#dLightAnimate")[0].checked) {
+                        dLight.position.set(sin,0,-cos);
+                    }
                 }
             };
         };

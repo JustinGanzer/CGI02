@@ -243,7 +243,10 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 var dlight = new THREE.DirectionalLight(color,0.5);
                 dlight.name="dLight";
                 dlight.position.set(1, 0, 0.3).normalize();
+
+
                 scene.addLight(dlight);
+
                 }));
 
             $("#animate").click((function () {
