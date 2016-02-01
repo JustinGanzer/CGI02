@@ -11,8 +11,8 @@
 
 
 /* requireJS module definition */
-define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "planet"],
-    (function($,BufferGeometry, Random, Band, Parametric, Robot, Planet) {
+define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "planet", "explosion"],
+    (function($,BufferGeometry, Random, Band, Parametric, Robot, Planet, Explosion) {
         "use strict";
 
         /*
@@ -27,6 +27,7 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
             $("#parametric").hide();
             $("#robot").hide();
             $("#planet").hide();
+            $("#explosion").hide();
 
             $("#btnRandom").click( (function() {
                 $("#random").show();
@@ -34,6 +35,7 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 $("#parametric").hide();
                 $("#robot").hide();
                 $("#planet").hide();
+                $("#explosion").hide();
             }));
 
             $("#btnBand").click( (function() {
@@ -42,6 +44,7 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 $("#parametric").hide();
                 $("#robot").hide();
                 $("#planet").hide();
+                $("#explosion").hide();
             }));
 
             $("#btnParametric").click( (function() {
@@ -50,6 +53,7 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 $("#band").hide();
                 $("#robot").hide();
                 $("#planet").hide();
+                $("#explosion").hide();
             }));
 
             $("#btnPlanet").click( (function() {
@@ -58,6 +62,16 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 $("#band").hide();
                 $("#robot").hide();
                 $("#planet").show();
+                $("#explosion").hide();
+            }));
+
+            $("#btnExplosion").click( (function() {
+                $("#parametric").hide();
+                $("#random").hide();
+                $("#band").hide();
+                $("#robot").hide();
+                $("#planet").hide();
+                $("#explosion").show();
             }));
 
             $('#rotate').click((function () {
@@ -243,11 +257,13 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 var dlight = new THREE.DirectionalLight(color,0.5);
                 dlight.name="dLight";
                 dlight.position.set(1, 0, 0.3).normalize();
-
-
                 scene.addLight(dlight);
-
                 }));
+
+            $("#btnNewExplosion").click( (function() {
+                var planet = new Explosion();
+                //TODO
+            }));
 
             $("#animate").click((function () {
                 scene.toggleAnimation($("#animate")[0].checked );
