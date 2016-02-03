@@ -36,8 +36,9 @@ vec3 phong(vec3 p, vec3 v, vec3 n, vec3 lightPos, vec3 lightColor) {
 
     vec3 textureDayColor = texture2D(daytimeTexture, vUv).rgb * 3.0;
     vec3 textureNightColor = texture2D(nightTexture, vUv).rgb * 1.0;
-    vec3 textureCloudColor = texture2D(cloudTexture, vUv+vec2(time*0.2,0.0)).rgb * 2.0;
+    vec3 textureCloudColor = texture2D(cloudTexture, vUv).rgb * 2.0;
 
+//+vec2(time*0.2,0.0)
     if(dot(v,n) < 0.0) return vec3(0,0,0);
     vec3 toLight = normalize(lightPos - p);
     vec3 reflectLight = reflect(-toLight, n);
@@ -47,27 +48,34 @@ vec3 phong(vec3 p, vec3 v, vec3 n, vec3 lightPos, vec3 lightColor) {
     vec3 ambi;
     if(nightOn == 1) {
             ambi = textureNightColor * ambientLightColor[0];
+            ambi = pow(ambi, vec3(0.6))*2.0;
         } else {
-            //ambi = textureDayColor;
             ambi = phongAmbientMaterial * ambientLightColor[0];
         }
 
-    vec3 diff;
-        if(dayOn == 1) {
-            diff = textureDayColor * ndots * lightColor;
-        } else {
-            diff = phongDiffuseMaterial * ndots * lightColor;
-        }
 
-    if(cloudsOn == 1) {
-            ambi = mix(ambi, textureCloudColor * 0.08 * ambientLightColor[0], textureCloudColor.x);
-            diff = mix(diff, textureCloudColor * ndots * 0.5, textureCloudColor.x);
+    // diffuse contribution
+        vec3 diffuseCoeff = (dayOn == 1 )? textureDayColor : phongDiffuseMaterial;
+    // clouds at day?
+        if(cloudsOn == 1) {
+            diffuseCoeff = (1.0-textureCloudColor)*diffuseCoeff + textureCloudColor*vec3(1,1,1);
         }
+        // final diffuse term for daytime
+        vec3 diff =  diffuseCoeff * directionalLightColor[0] * ndots;
 
-    //vec3 ambi = phongAmbientMaterial * ambientLightColor[0];
-    //vec3 diff = phongDiffuseMaterial * ndots * lightColor;
+     //ambi = ambi * ambientLightColor[0] * 5.0;
+     //diff = diff * ndots * lightColor;
     vec3 spec = phongSpecularMaterial * pow(rdotv, phongShininessMaterial ) * lightColor;
-    return ambi + diff + spec;
+    vec3 returnValue;
+
+    if(ndots != 0.0){
+    returnValue = diff + spec;
+    }
+    else{
+    returnValue = ambi + diff + spec;
+    }
+
+    return returnValue;
 }
 
 void main() {
@@ -126,16 +134,7 @@ void main() {
     //vec3 color = ambient + diffuse + specular;
 
 
-
-    vec2 coord=vUv;
-
     v = (-ecPosition.xyz);
-    vec4 RGB = texture2D( daytimeTexture, vUv );
-
-    vec4 clouds = texture2D( cloudTexture, coord+vec2(0.4*time,0.0));
-    RGB = 1.0-(1.0-clouds.r)*(1.0-RGB);
-
-    //gl_FragColor = vec4(RGB.r,RGB.g,RGB.b,1.0 );
 
     vec3 newColor = phong(ecPosition.xyz,v,ecNormal,directionalLightDirection[0],directionalLightColor[0]);
     gl_FragColor = vec4(newColor,1.0);

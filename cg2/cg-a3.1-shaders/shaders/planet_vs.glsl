@@ -11,12 +11,14 @@ uniform sampler2D topoTexture;
 void main() {
 
 mat4 projectionMatrixx = projectionMatrix;
-vUv=uv;
+    vUv=uv;
 
     vec4 RGB = texture2D( topoTexture, vUv );
     float h = RGB.r*0.1+1.0;
+
     vec4 ecPosition = modelViewMatrix * vec4(position, 1.0);
     ecNormal = normalize(normal);
+
     gl_Position = projectionMatrix *modelViewMatrix * vec4(position*h,1.0);
 
 }
