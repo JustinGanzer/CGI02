@@ -1,7 +1,7 @@
 
 // we need two varying variables
 //varying 
-//varying 
+varying float noise;
 
 
 uniform float time;
@@ -150,7 +150,10 @@ void main() {
     // compute noise value using noise3d which is parameterized by a vec3, e.g.
     // a normal (scaled by a scalar controlling the frequency - high, low frequencies)
     // when adding a uniform variable 'time' to that value it is getting animated
-    
+
+    noise = noise3D( normal * freqScale + time) ;
+    noise = (noise +1.0)/2.0;
+
     // Hint: the result of noise is used for the displacement and the access into the 
     // texture in the fragment shader
 
@@ -165,5 +168,7 @@ void main() {
 
     // vec3 displacedPosition = ...
     // gl_Position = ...
+    vec3 displacedPosition = position * vec3(noise * weight);
+    gl_Position = projectionMatrix * modelViewMatrix * vec4( displacedPosition, 1.0 );
 
 }

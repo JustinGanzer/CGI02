@@ -166,10 +166,15 @@ define(["three", "util", "shaders", "BufferGeometry", "random", "band"],
 
                 var planet = scope.scene.getObjectByName("planet");
                 var dLight = scope.scene.getObjectByName("dLight");
+                var explosion = scope.scene.getObjectByName("explosion");
+
                 if(planet){
                     if ($("#dLightAnimate")[0].checked) {
                         dLight.position.set(sin,0,-cos);
                     }
+                }
+                if(explosion){
+                    explosion.material.uniforms[ 'time' ].value = .000035 * ( Date.now() - start);
                 }
             };
         };

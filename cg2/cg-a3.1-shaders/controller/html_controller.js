@@ -261,8 +261,10 @@ define(["jquery", "BufferGeometry", "random", "band", "parametric", "robot", "pl
                 }));
 
             $("#btnNewExplosion").click( (function() {
-                var planet = new Explosion();
-                //TODO
+                var explosion = new Explosion();
+
+                scene.addMesh(explosion.getMesh());
+                //scene.addBufferGeometry(explosion);
             }));
 
             $("#animate").click((function () {
